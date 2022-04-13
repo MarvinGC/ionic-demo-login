@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { environment } from '../../environments/environment';
+import { AuthService } from '../api/auth.service';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +10,11 @@ import { environment } from '../../environments/environment';
 })
 export class RegisterPage implements OnInit {
   registerForm: FormGroup;
-  constructor(public formBuilder: FormBuilder) {}
+  constructor(
+    public formBuilder: FormBuilder,
+    private authService: AuthService,
+    private alertCtrl: AlertController
+  ) {}
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -21,13 +26,34 @@ export class RegisterPage implements OnInit {
       correo: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       password: ['', [Validators.required]],
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      password_confirm: ['',[Validators.required]]
+      password_confirmation: ['',[Validators.required]]
     });
   }
   submitForm(){
-    console.log(this.registerForm.valid);
-    console.log(this.registerForm.value);
-    console.log(environment.apiUrl);
+    if(this.registerForm.valid) {
+      console.log(this.registerForm.value);
+      this.authService.register(this.registerForm.value)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch( (err) => {
+          console.log(JSON.stringify(err.error.errors));
+          this.mensajeError(
+            'Registro',
+            'Error de registro',
+            'error'
+          );
+        });
+    }
+  }
+  async mensajeError(titulo, subtitulo, mensaje) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      subHeader: subtitulo,
+      message: mensaje,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
 }
