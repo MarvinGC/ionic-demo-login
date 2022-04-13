@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Registrarse</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+        <ion-item lines="full">
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input type="text" formControlName="nombre"></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Correo Electrónico</ion-label>
+          <ion-input type="text" formControlName="correo"></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Confirmar Contraseña</ion-label>
+          <ion-input type="password" formControlName="password_confirm"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-button type="submit" [disabled]="registerForm.invalid">Continuar</ion-button>
+        </ion-item>
+      </form>
+      <ion-item>
+        <ion-text>
+          ¿Ya tienes cuenta?
+          <a routerLink='/login'>iniciar sesion aqui</a>
+        </ion-text>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
