@@ -10,6 +10,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "nueva": [
+        "dist/nueva/nueva",
+        "dist/nueva"
+      ]
+    },
     "target": "es2015",
     "module": "es2020",
     "lib": ["es2018", "dom"]

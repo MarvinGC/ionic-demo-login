@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Login
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,27 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Inicio de sesión</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+          <ion-item lines="full">
+            <ion-label position="stacked">Correo Electrónico</ion-label>
+            <ion-input type="text" formControlName="correo"></ion-input>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-button type="submit" [disabled]="loginForm.invalid">Continuar</ion-button>
+          </ion-item>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
   </div>
 </ion-content>
