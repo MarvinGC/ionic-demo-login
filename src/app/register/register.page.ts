@@ -35,10 +35,15 @@ export class RegisterPage implements OnInit {
       this.authService.register(this.registerForm.value)
         .then((response) => {
           console.log(response);
+          this.alerta(
+            'Exito!',
+            'Registro',
+            'Registro correcto'
+          );
         })
         .catch( (err) => {
           console.log(JSON.stringify(err.error.errors));
-          this.mensajeError(
+          this.alerta(
             'Registro',
             'Error de registro',
             'error'
@@ -46,7 +51,7 @@ export class RegisterPage implements OnInit {
         });
     }
   }
-  async mensajeError(titulo, subtitulo, mensaje) {
+  async alerta(titulo, subtitulo, mensaje) {
     const alert = await this.alertCtrl.create({
       header: titulo,
       subHeader: subtitulo,

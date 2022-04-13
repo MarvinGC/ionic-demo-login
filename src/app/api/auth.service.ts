@@ -15,7 +15,7 @@ export class AuthService {
   register(datosRegistro: any){
     return this.http.post(`${environment.apiUrl}/register`, datosRegistro).toPromise();
   }
-  login(datosLogin){
+  login(datosLogin: any){
     return this.http.post(`${environment.apiUrl}/login`, datosLogin).toPromise();
   }
 }

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { environment } from '../../environments/environment';
+import {AuthService} from '../api/auth.service';
+import {AlertController} from '@ionic/angular';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +11,12 @@ import { environment } from '../../environments/environment';
 })
 export class LoginPage implements OnInit{
   loginForm: FormGroup;
-  constructor(public formBuilder: FormBuilder) {}
+  constructor(
+    public formBuilder: FormBuilder,
+    private authService: AuthService,
+    private alertCtrl: AlertController,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -19,8 +26,30 @@ export class LoginPage implements OnInit{
   }
 
   submitForm(){
-    console.log(this.loginForm.valid);
-    console.log(this.loginForm.value);
-    console.log(environment.apiUrl);
+    if(this.loginForm.valid) {
+      console.log(this.loginForm.value);
+      this.authService.login(this.loginForm.value)
+        .then((response) => {
+          console.log(response);
+          this.router.navigate(['home']);
+        })
+        .catch( (err) => {
+          console.log(err);
+          this.alerta(
+            'Login',
+            'Error de inicio de sesion',
+            'error'
+          );
+        });
+    }
+  }
+  async alerta(titulo, subtitulo, mensaje) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      subHeader: subtitulo,
+      message: mensaje,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
